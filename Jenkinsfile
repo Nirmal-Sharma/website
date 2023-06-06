@@ -1,13 +1,10 @@
-pipeline{
+pipeline {
     agent any
-    environment{
-        staging_server="34.209.240.237"
-    }
-    stages{
-        stage('Deploy to Remote'){
-            steps{
-                sh 'rsync -avzh ${WORKSPACE}/* root@${staging_server}:/var/www/html/'
-                
+
+    stages {
+        stage('Deploying on server') {
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'WebServer', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/var/www/html/', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '**/*.*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }

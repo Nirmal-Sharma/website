@@ -6,6 +6,7 @@ pipeline{
     stages{
         stage('Deploy to Remote'){
             steps{
+                sh '"ssh -o StrictHostKeyChecking=no root@${staging_server} 'echo $HOME'"'
                 sh 'scp -r ${WORKSPACE}/* root@${staging_server}:/var/www/html/'
                 
             }

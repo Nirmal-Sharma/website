@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('Deploy to Remote'){
             steps{
-                sh 'sudo scp -r ${WORKSPACE}/*  root@${staging_server}:/root/'
+                sh 'sudo scp -S -r ${WORKSPACE}/*  root@${staging_server}:/root/'
             }
         }
     }
